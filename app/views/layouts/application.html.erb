@@ -11,6 +11,23 @@
   </head>
 
   <body>
+    <nav class="navbar is-link" role="navigation">
+      <div class="navbar-brand">
+        <%= link_to "The Clubhouse", root_path, class:"navbar-item" %>
+      </div>
+      <div class="navbar-menu">
+        <div class="navbar-start"></div>
+        <div class="navbar-end">
+          <%if user_signed_in?%>
+            <%= link_to current_user.name, root_path, class:"navbar-item"%>
+            <%= link_to "Log out", destroy_user_session_path, method: :delete, class:"navbar-item" %>
+          <%else%>
+            <%= link_to "Sign up", new_user_registration_path, class:"navbar-item" %>
+            <%= link_to "Log in", new_user_session_path, class:"navbar-item" %>
+          <%end%>
+        </div>
+      </div>
+    </nav>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
     <%= yield %>
