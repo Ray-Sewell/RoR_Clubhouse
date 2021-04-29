@@ -16,7 +16,13 @@
         <%= link_to "The Clubhouse", root_path, class:"navbar-item" %>
       </div>
       <div class="navbar-menu">
-        <div class="navbar-start"></div>
+        <div class="navbar-start">
+          <%if user_signed_in?%>
+            <div class="navbar-item">
+              <%= link_to 'New Post', new_post_path, class:"button is-success" %>
+            </div>
+          <%end%>
+        </div>
         <div class="navbar-end">
           <%if user_signed_in?%>
             <%= link_to current_user.name, root_path, class:"navbar-item"%>
@@ -30,6 +36,7 @@
     </nav>
     <p class="notice"><%= notice %></p>
     <p class="alert"><%= alert %></p>
+    <br>
     <%= yield %>
   </body>
 </html>
