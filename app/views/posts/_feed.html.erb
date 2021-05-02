@@ -1,20 +1,53 @@
 <div class="column">
     <%@posts.each do |post|%>
-        <article class="message is-info">
-            <div class="message-header">
-                <%if user_signed_in?%>
-                    <p><%= post.user.name %></p>
-                    <%if current_user == post.user %>
-                        <button class="delete" aria-label="delete"></button>
-                    <%end%>
-                <%else%>
-                    <p>Sign in to view the author!</p>
-                <%end%>
-            </div>
-            <div class="message-body">
-                <p><%= post.body %></p><br>
-                <p><%= post.created_at.to_s[0..15]%></p>
-            </div>
-        </article>
+        <div class="box">
+            <article class="media">
+                <div class="media-left">
+                    <figure class="image is-64x64">
+                        <%= gravatar_image_tag(post.user.email, class:"is-rounded")%>
+                    </figure>
+                </div>
+                <div class="media-content">
+                    <div class="content">
+                        <p>
+                            <strong><%= post.title%></strong>
+                            <% if user_signed_in?%>
+                                <% if current_user == post.user%>
+                                    <%= link_to 'edit post', edit_post_path(post), class:"is-size-7" %> |
+                                    <%= link_to "delete post", post, method: :delete, data: { confirm: 'Are you sure?' }, class:"is-size-7"%>
+                                <%end%>
+                                <br>
+                                <small><%= post.user.name %></small>
+                            <% else%>
+                                <br>
+                                <small>Sign in to view author</small>
+                            <%end%>
+                             - <small>Posted <%= post.created_at.to_s[0..15]%></small>
+                            <br>
+                            <p><%= post.body %></p>
+                        </p>
+                    </div>
+                    <nav class="level is-mobile">
+                    <div class="level-left">
+                        <a class="level-item" aria-label="reply">
+                        <span class="icon is-small">
+                            <i class="fas fa-reply" aria-hidden="true"></i>
+                        </span>
+                        </a>
+                        <a class="level-item" aria-label="retweet">
+                        <span class="icon is-small">
+                            <i class="fas fa-retweet" aria-hidden="true"></i>
+                        </span>
+                        </a>
+                        <a class="level-item" aria-label="like">
+                        <span class="icon is-small">
+                            <i class="fas fa-heart" aria-hidden="true"></i>
+                        </span>
+                        </a>
+                    </div>
+                    </nav>
+                </div>
+            </article>
+        </div>
     <%end%>
 </div>
